@@ -1,0 +1,88 @@
+Készíts egy konzolos Java alkalmazást az alább felsorolt feltételek szerint.
+
+Megvalósítandó feladat:
+A hagyományos Connect4 nevű játék konzolos alkalmazásként való elkészítése teszt esetekkel kiegészítve Java programozási nyelven.
+
+Fordítási és futtatási környezet:
+0) A teljes, elkészült alkamazás neve "java-con4-ai" legyen.
+1.1) Java 21.0.5 2024-10-15 LTS
+1.2) Java Runtime version: 17.0.12+1-b1207.37 amd64
+1.3) MavenRunHelper (4.30.0-IJ2022.2)
+2) Windows 10 22H2 (19045.7058) 64bit
+3) IntelliJ IDEA 2024.1.7 (Community Edition)
+4) Felhasználható könyvtárak:
+4.1) org.slf4j.LoggerFactory
+4.2) org.slf4j.Logger
+4.3) ConsoleTable (https://github.com/JohnCSinclair-com/java-console-table)
+4.4) JColor (https://github.com/dialex/JColor)
+
+Kód készítés során vedd figyelembe a következő utasításokat:
+1) Mindig tiszta, jól konfigurálható, könnyen karbantartható kódot készíts.
+1.1) A kódnak egyszerűnek, az emberek számára könnyen követhetőnek kell lennie.
+1.2) Egy kezdő programozónak is meg kell tudnia érteni a generált kódot.
+1.3) Ha lehetséges, olyan segédfüggvényeket használj, amelyek a kód végrehajtása során bármikor újra felhasználhatók.
+1.4) Változók és segédfüggvények esetén az elnevezés mindig leíró jellegű, kifejező legyen, a Pascal-case ajánlásait kövesse.
+1.5) Minden lehetséges szinten kövesd a Java nyelvhez tartozó belépési, kilépési és belső használati ajánlásokat. (Getter, Setter, Constructor, stb.)
+1.6) Minden lehetséges módon kövesd a Java nyelv ajánlásait az objektum orintáltság megőrzésében, amennyiben lehetséges.
+1.7) A program fő részeit szervezd külön-külön fájlokba (tábla rajzolás, állás kimentés, állás visszatöltés, játékmenet, stb.), aminek stuktúrája legyen logikusan felépítve.
+1.8) Az alkalmazás legyen parancsori kapcsolók fogadására felkészítve.
+1.8.1) Ha az opcionális futási paraméter "-r" vagy "--rank", akkor csak a győztesek rangsorát jelenítse meg csökkenő sorrendben.
+1.8.2) Ha az opcionális futási paraméter "-l" vagy "--load", akkor töltse be az előzőleg elmentett játékállást és folytassa.
+1.8.3) Ha az opcionális futási paraméter "-t" vagy "--table", akkor tábla méretét állítsa be az ekkor kötelező paraméterként OSZLOPxSOR formában megadott értékűre.
+1.8.4) Ha az opcionális futási paraméter "-u" vagy "--user", akkor a kapcsoló után beírt játékos nevét állítsa be az első játékosnak.
+1.8.5) Ha bármelyik opcionális paraméter hibásan lett megadva, hibajelzéssel álljon le a futtatás.
+2) Minden fontos mozzanatot és eljárást kommentálj.
+2.1) Részesítsd előnyben a JavaDoc kommentelést.
+2.2) Az egyes mozzanatok magyarázatára használj a Java nyelvi kommentelést.
+
+Játékmenet leírása:
+0) Az alkalmazás kövesse a hagyomás játékmenetet.
+1) A játék induljon egy üdvözlő képernyővel, ahol lehetőség van gombnyomásra megtekinteni a győzelmek száma alapján számolt rangsort, visszatölteni egy korábban elmenettet játékot, vagy elkezdeni egy teljesen új játékot.
+1.1) A rangsor megjelenítésére az "r" vagy "R" karakteket használhatók. A rangsor megállapítása a 'cn4-gyoz.csv' fájlban letárolt adatsorok alapján történjen, csökkenő sorrendben. Ugyanazon nevek minden esetben ugyanazon személyeket jelenti, mert így könnyen megszámlálhatók.
+1.2) A kimentett játékmenet visszatöltése "l" vagy "L" karakterekkel történhet. Ebben az esetben ha rendelkezésre áll a 'cn4-ment.json' fájl, akkor folytatódjon a kimentett állástól a játék. Ha nem áll rendelkezésre, akkor egy hibaüzenettel térjen vissza az üdvözlő képernyőre.
+1.3) Új játék kezdéséhez az "n" vagy "N" billentyűk lenyomása szükséges.
+2) A játékot lehessen 2 élő játékosnak VAGY 1 élő és 1 gépi játékosnak játszania.
+2.1) Élő játékosok esetén kérjen be a játékosok számának megfelelő nevet vagy neveket.
+2.1.1) Ha két élő játékos azonos nevet ad meg, akkor a nevek egészüljenek ki "-1" majd "-2" sztringekkel.
+2.1.2) A gépi játékos elnevezése minden esetben legyen "Sz.Gép".
+2.2) Az egyik játékos korongjának színe sárga (S), a másiké piros (P).
+2.3) A játék kezdési joga sorsolás útján kerül meghatározásra.
+2.4) A tábla méretét (oszlopok és sorok száma) kérje be az első élő játékostól.
+2.4.1) Amennyiben nem egész szám a bevitt adat, abban az esetben a tábla mérete minden esetben 6 oszlop és 6 sor.
+2.4.2) A játéktér táblája minimum 4 oszlop és 4 sor méretű lehet.
+2.4.3) A játéktér táblája maximum 12 oszlop és 12 sor méretű lehet.
+2.5) A játéktábla oszlopai az angol ábécé szerint legyenek elnevezve, a sorai arab számozást kapjanak.
+2.5.1) A korongokat a rendelkezésre álló oszlopok azonosítójával lehessen leejteni.
+2.5.2) Ha olyan oszlop azonosítót ad meg a játékos, ami nem áll rendelkezésre (nem elérhető, betelt), akkor egy hibazenettel jelezzen vissza, s kérjen egy új oszlop azonosítót.
+2.6) Minden korong lerakását követően fusson le az ellenőrzés, hogy nyert-e bármelyik játékos.
+2.6.1) Amennyiben már nem lehet több korongot elhelyezni, hirdessen döntetlent.
+2.7) Minden lépést követően a játéktábla aktualizált állását meg kell jeleníteni.
+2.7.0) A játéktér ConsoleTable (https://github.com/JohnCSinclair-com/java-console-table) segítségével legyen ábrázolva.
+2.7.1) A lerakott korongokat jelképező betűk színei "S" esetében élénk sárga, "P" esetében élénk piros.
+2.7.2) Amennyiben az aktuális kiíratáskor van győztes játékos, a korongokat jelképező betűk (S vagy P) hátterei legyenek fehér színűek, hogy jól kivehető legyen győzelem.
+2.7.3) Időbélyeggel egy sorban a győztes nevét, a tábla méretét, a lépések számát, a játékra fordított időt mentsük ki egy UTF-8 kódolású CSV fájlba. A fájl neve legyen 'cn4-gyoz.csv' és a felhasználó könyvtárában létrehozott 'Connect4-MI' könyvtárban legyen elhelyezve.
+3) Játék közben bármikor legyen lehetőség az aktuális tábla állását elmenteni "Ctrl+S" billentyű kombinációval.
+3.1) A tábla állapotát letároló fájl neve: 'cn4-ment.json' és a felhasználó könyvtárában létrehozott 'Connect4-MI' könyvtárban legyen elhelyezve.
+3.1.0) Ha már van egy korábbi 'cn4-ment.json' fájl, akkor kérdezzen rá a felülírásra.
+3.1.0) A JSON fájlnak tartalmaznia kell az aktuális tábla méretét (oszlopok száma, sorok száma).
+3.1.1) A JSON fájlnak tartalmaznia kell az aktuális tábla állást.
+3.1.2) A JSON fájlnak tartalmaznia kell az aktuális játékidőt.
+3.1.3) A JSON fájlnak tartalmaznia kell a játékosok neveit.
+3.1.4) A JSON fájlnak tartalmaznia kell az utolsó korongot lerakó játékos azonosítóját, ahonnan a másik játékos folytathatja.
+4) Az alkalmazás futását bármelyik pillantban be lehet fejezni a "Ctrl+C" billenty kombinációval.
+
+Dokumentáció:
+1) Készíts egy magyar nyelvű, részletes alkalamazás dokumentációt Markdown nyelven.
+1.1) Legyen egy különálló, általános bemutató megfogalmazva a megvalósítandó és a megvalósult feladatról.
+1.2) Legyen külön fejezetben megfogalmazva a technikai, a logikai és szemantikai kód értlemezés.
+1.3) Legyen külön fejezetben megfogalmazva a futtatással kapcsolatos információk.
+1.4) Legyen egy külön fejezet, ami tárgyalja, hogy pontosan milyen prompt segítségével sikerült a megvalósítani a feladatot.
+2) Állíts elő egy parancssorban futtatható, felparaméterezett parancsot, aminek segítségével elő lehet állítani a technikai dokumentációt a Javadoc megjegyzések segítségével.
+
+Tesztesetek készítésekor vedd figyelembe az alábbiakat:
+1) Legalább 4 különböző, de akár egymásra is építkező teszt esetet kell készíteni.
+1.1) Legyen a játéktér méretével foglalkozó teszt eset. A minimum elvárható méret: 4x4 mező.
+1.2) Legyen a játékmenet kimentését és visszatöltését vizsgáló eset.
+1.3) Legyen hibás lépést vizsgáló teszt eset.
+1.4) Legyen futtatási paramétert vizsgáló teszt eset.
+1.x) Bármilyen, az alkalmazás biztonságos futtatására szolgáló további teszt esetet vagy teszt eseteket is megfogalmazhatsz.
