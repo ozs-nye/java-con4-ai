@@ -14,7 +14,7 @@
 ## 1. Általános bemutató
 A "java-con4-ai" egy klasszikus Connect4 konzolos játék, amely Java 21 LTS környezetre épült. A cél, hogy a játékosok 4 azonos színű korongot helyezzenek el egymás mellett horizontálisan, vertikálisan vagy diagonálisan.
 
-<p style="text-align: center; padding: 10px;"><img src="readme/java-con4-ai.png" style="border: 1px solid #666; border-radius: 10px; filter: drop-shadow(5px 5px);" alt="java-con4-ai" /></p>
+<p style="text-align: center"><img src="readme/java-con4-ai.png" style="border: 1px solid #666; border-radius: 10px; filter: drop-shadow(5px 5px);" alt="java-con4-ai" /></p>
 
 
 Főbb funkciók és jellemzők:
